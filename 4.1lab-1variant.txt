@@ -10,15 +10,67 @@ struct student
 	char lastname[15];
 	char group[3];
 	int  A[5] = { };
-
 };
 
-int main()
+struct student s[count]
 {
-	int scount = 0, j = 0, e = '1'; // scount -колво студентов чей балл больше 4, j-колво введеных пользователей (использую для вывода)  e-значение 1 останавливает ввод
+};
+
+int sort(int j) // сортировка а так же вывод если балл больше 4
+{
+	int scount = 0;
 	float score = 0;
+
+	for (int i = 0; i <= j; i++)
+	{
+		for (int ii = 0; ii < 5; ii++)
+		{
+			score = score + s[i].A[ii];
+		}
+		if (score / 5 > 4)//средний бал больше 4?
+		{
+			scount = scount + 1;
+			score = 0;
+			printf("\n#");
+			printf(" %s", s[i].firstname);
+			printf(" %s", s[i].secondname);
+			printf(" %s", s[i].lastname);
+			printf(" %s |", s[i].group);
+			for (int ii = 0; ii < 5; ii++)
+			{
+				printf("%i|", s[i].A[ii]);
+			}
+		}
+	}
+	if (scount == 0)
+	{
+		printf("No students");
+	}
+	return j;
+}
+
+int groupsoort(int j) // сортировка по группам
+{
 	struct student var; //доп переменная при сортировке
-	struct student s[count];
+	for (int i = 0; i < j; i++)
+	{
+		for (int ii = 0; ii < j; ii++)
+		{
+			if (s[ii].group < s[ii + 1].group)
+			{
+				var = s[ii];
+				s[ii] = s[ii + 1];
+				s[ii + 1] = var;
+			}
+		}
+	}
+	j = sort(j);
+	return j;
+}
+
+int main() // ввод значений
+{
+	int j = 0, e = '1'; // scount -колво студентов чей балл больше 4, j-колво введеных пользователей (использую для вывода)  e-значение 1 останавливает ввод
 
 	printf("---Write '1' to close a program---\n\n");
 
@@ -51,46 +103,8 @@ int main()
 		if (e == 1)
 		{
 			j = i;
+			j = groupsoort(j);
 			break;
 		}
-	}
-
-	for (int i = 0; i < j; i++)
-	{
-		for (int ii = 0; ii < j; ii++)
-		{
-			if (s[ii].group < s[ii + 1].group)
-			{
-				var = s[ii];
-				s[ii] = s[ii + 1];
-				s[ii + 1] = var;
-			}
-		}
-	}
-
-	for (int i = 0; i <= j; i++)
-	{
-		for (int ii = 0; ii < 5; ii++)
-		{
-			score = score + s[i].A[ii];
-		}
-		if (score/5 > 4)//средний бал больше 4?
-		{	
-			scount = scount+1;
-			score = 0;
-			printf("\n#");
-			printf(" %s", s[i].firstname);
-			printf(" %s", s[i].secondname);
-			printf(" %s", s[i].lastname);
-			printf(" %s |", s[i].group);
-			for (int ii = 0; ii < 5; ii++)
-			{
-				printf("%i|", s[i].A[ii]);
-			}
-		}
-	}
-	if (scount == 0)
-	{
-		printf("No students");
 	}
 }
